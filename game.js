@@ -33,6 +33,7 @@ var canvases = {
     , lampPost: document.createElement('canvas')
     , lightingA: document.createElement('canvas')
     , lighting: document.createElement('canvas')
+    , character: document.createElement('canvas')
     };
 
 var ctxs = {
@@ -48,6 +49,7 @@ var ctxs = {
     , lampPost: canvases.lampPost.getContext("2d")
     , lightingA: canvases.lightingA.getContext("2d")
     , lighting: canvases.lighting.getContext("2d")
+    , character: canvases.character.getContext("2d")
 }
 
 
@@ -330,17 +332,35 @@ var createLighting = function() {
 }
 createLighting();
 
+var createCharacter = function() {
+    ctxs.character.fillStyle = colors.LAMP_LIGHT;
+    ctxs.character.clearRect(0, 0, 200, 200);
+    ctxs.character.fillRect(0, 0, 20, 50);
+}
+createCharacter();
+
 var render = function() {
     gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-    gameCtx.drawImage(canvases.bg, world.x, 0);
-    gameCtx.drawImage(canvases.lighting, world.x, 0);
+    gameCtx.drawImage(canvases.bg, world.x, 0); //Background
+
+    gameCtx.drawImage(canvases.character, player.renderX, player.renderY); //Character
+
+    gameCtx.drawImage(canvases.lighting, world.x, 0); //Lighting
     gameCtx.strokeRect(0, 0, gameCanvas.width, gameCanvas.height);
 
     window.requestAnimationFrame(render);
 }
 
-world = {
+var world = {
     x: -18500
+}
+
+var player = {
+    x: 350
+    , y: 380
+    , xD: 0.2
+    , renderX: 350
+    , renderY: 380
 }
 
 var stepWorld = function() {
@@ -350,5 +370,15 @@ var stepWorld = function() {
 }
 stepWorld();
 
+
+var playerCtrl = function() {
+    if (player.x > 550) player.xD = -0.1;
+    if (player.x < 100) player.xD = 0.2;
+    player.x += player.xD;
+    player.renderX = player.x;
+    player.renderY = player.y;
+    setTimeout(playerCtrl,5);
+}
+playerCtrl();
 
 window.requestAnimationFrame(render);
