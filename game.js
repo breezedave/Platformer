@@ -373,7 +373,7 @@ var world = {
 var player = {
     x: 350
     , y: 395
-    , xD: 0.2
+    , xD: 0.05
     , renderX: 350
     , renderY: 380
     , frame:0
@@ -387,8 +387,8 @@ var stepWorld = function() {
 stepWorld();
 
 var playerCtrl = function() {
-    if (player.x > 550) player.xD = -0.1;
-    if (player.x < 100) player.xD = 0.2;
+    if (player.x > 550) player.xD = -0.05;
+    if (player.x < 100) player.xD = 0.05;
     player.x += player.xD;
     player.renderX = player.x;
     player.renderY = player.y;
