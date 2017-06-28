@@ -34,6 +34,7 @@ var canvases = {
     , lightingA: document.createElement('canvas')
     , lighting: document.createElement('canvas')
     , character: document.createElement('canvas')
+    , troy: document.createElement('canvas')
     };
 
 var ctxs = {
@@ -50,14 +51,24 @@ var ctxs = {
     , lightingA: canvases.lightingA.getContext("2d")
     , lighting: canvases.lighting.getContext("2d")
     , character: canvases.character.getContext("2d")
+    , troy: canvases.troy.getContext("2d")
 }
 
+var troyImg = new Image();
+troyImg.addEventListener('load', function() {
+    ctxs.troy.drawImage(this,0,0);
+}, false);
+troyImg.src = "tempChar.png";
 
 for(i in canvases) {
     canvases[i].width = 600;
     canvases[i].height = 600;
 }
 canvases.bg.width = canvases.lighting.width = 20000;
+canvases.troy.width = 72;
+canvases.troy.height = 37;
+canvases.character.width = 25;
+canvases.character.height = 37;
 
 var makeFloorPanel = function() {
     var tl = [0, 0];
@@ -332,12 +343,16 @@ var createLighting = function() {
 }
 createLighting();
 
-var createCharacter = function() {
-    ctxs.character.fillStyle = colors.LAMP_LIGHT;
-    ctxs.character.clearRect(0, 0, 200, 200);
-    ctxs.character.fillRect(0, 0, 20, 50);
+var createCharacter = function(i) {
+    ctxs.character.clearRect(0, 0, 25, 37);
+    if(i<=30) {
+        //ctxs.character.drawImage(canvases.troy, 0, 0);
+        ctxs.character.drawImage(canvases.troy, 0, 0);
+    } else {
+        ctxs.character.drawImage(canvases.troy, -48, 0);
+        //ctxs.character.drawImage(canvases.troy, 26, 0);
+    }
 }
-createCharacter();
 
 var render = function() {
     gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
@@ -357,10 +372,11 @@ var world = {
 
 var player = {
     x: 350
-    , y: 380
+    , y: 395
     , xD: 0.2
     , renderX: 350
     , renderY: 380
+    , frame:0
 }
 
 var stepWorld = function() {
@@ -370,13 +386,15 @@ var stepWorld = function() {
 }
 stepWorld();
 
-
 var playerCtrl = function() {
     if (player.x > 550) player.xD = -0.1;
     if (player.x < 100) player.xD = 0.2;
     player.x += player.xD;
     player.renderX = player.x;
     player.renderY = player.y;
+
+    createCharacter(player.frame);
+    player.frame = (player.frame+1)%60;
     setTimeout(playerCtrl,5);
 }
 playerCtrl();
