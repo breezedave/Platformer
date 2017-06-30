@@ -6,9 +6,10 @@ gameCanvas.width = 800;
 gameCanvas.height = 600;
 
 var world = {
-    x: -1000
+    x: -100
     , rendered: false
     , tick: 0
+    , debug: true
 }
 
 var player = {

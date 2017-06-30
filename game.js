@@ -3,6 +3,9 @@ var render = function() {
         gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); //Clean
         gameCtx.drawImage(canvases.skyBox, world.x, 0);
         gameCtx.drawImage(canvases.ground, world.x, 300);
+        gameCtx.drawImage(canvases.deepBg4A, (world.x * 0.25), 0);
+        gameCtx.drawImage(canvases.deepBg3A, (world.x * 0.7), 0);
+        gameCtx.drawImage(canvases.deepBg2A, (world.x * 0.87), 0);
         gameCtx.drawImage(canvases.deepBg1A, (world.x * 0.95), 0);
 
         if(world.tick%200 <100) {
@@ -13,7 +16,7 @@ var render = function() {
 
         gameCtx.drawImage(canvases.character, player.renderX, player.renderY); //Character
 
-        if(renderCount%200 <100) {
+        if(world.tick%200 <100) {
             gameCtx.drawImage(canvases.fgB, world.x, 0); //Background
         } else {
             gameCtx.drawImage(canvases.fgA, world.x, 0); //Background
@@ -23,6 +26,13 @@ var render = function() {
             gameCtx.drawImage(canvases.lightingB, world.x, 0); //Lighting lamp off
         } else {
             gameCtx.drawImage(canvases.lightingA, world.x, 0); //Lighting lamp on
+        }
+
+        if(world.debug) {
+            gameCtx.fillStyle = colors.BLACK;
+            gameCtx.textAlign = "end"
+            gameCtx.font = "18px arial";
+            gameCtx.fillText(world.tick, 790, 20);
         }
 
     } else {
@@ -148,6 +158,18 @@ var buildOrder = [
     , {
         name: "Deep Background 1A"
         , fn: makeDeepBg1A
+    }
+    , {
+        name: "Deep Background 2A"
+        , fn: makeDeepBg2A
+    }
+    , {
+        name: "Deep Background 3A"
+        , fn: makeDeepBg3A
+    }
+    , {
+        name: "Deep Background 4A"
+        , fn: makeDeepBg4A
     }
 ]
 

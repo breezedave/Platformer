@@ -168,6 +168,34 @@ var makeDeepBg1A = function() {
     preRendered.DeepBg1A = true;
 }
 
+var makeDeepBg2A = function() {
+    var ctx = ctxs.deepBg2A;
+    ctx.clearRect(0, 0, 10000, 600);
+
+    preRendered.DeepBg2A = true;
+}
+
+var makeDeepBg3A = function() {
+    var ctx = ctxs.deepBg3A;
+    var buildings = new Image();
+    buildings.addEventListener('load', function() {
+        for(i =0; i<8; i++) {
+            ctx.drawImage(this, i * 891, 120);
+        }
+        preRendered.DeepBg4A = true;
+    }, false);
+    buildings.src = "buildings.png";
+
+    preRendered.DeepBg3A = true;
+}
+
+var makeDeepBg4A = function() {
+    var ctx = ctxs.deepBg4A;
+    ctx.clearRect(0, 0, 10000, 600);
+
+    preRendered.DeepBg4A = true;
+}
+
 var makeLampPostA = function() {
     var ctx = ctxs.lampPostA;
     ctx.fillStyle = colors.LAMP_LIGHT;
@@ -217,21 +245,8 @@ var makeLampPostA = function() {
 }
 
 var makechunkA = function() {
-    var tl = [0, 150];
-    var tr = [98, 250];
-    var bl = [0, 400];
-    var br = [98, 400];
     var ctx = ctxs.chunkA;
-
     ctx.fillStyle = colors.MUD;
-    ctx.moveTo(tl[0], tl[1]);
-    ctx.lineTo(tr[0], tr[1]);
-    ctx.lineTo(br[0], br[1]);
-    ctx.lineTo(bl[0], bl[1]);
-    ctx.lineTo(tl[0], tl[1]);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
     ctx.fillRect(98, 250, 135, 250);
     ctx.strokeRect(98, 250, 135, 250);
     ctx.drawImage(canvases.floor, 0, 100);
@@ -240,21 +255,8 @@ var makechunkA = function() {
 }
 
 var makechunkB = function() {
-    var tl = [0, 150];
-    var tr = [98, 250];
-    var bl = [0, 400];
-    var br = [98, 400];
     var ctx = ctxs.chunkB;
-
     ctx.fillStyle = colors.MUD;
-    ctx.moveTo(tl[0], tl[1]);
-    ctx.lineTo(tr[0], tr[1]);
-    ctx.lineTo(br[0], br[1]);
-    ctx.lineTo(bl[0], bl[1]);
-    ctx.lineTo(tl[0], tl[1]);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
     ctx.fillRect(98, 250, 135, 250);
     ctx.strokeRect(98, 250, 135, 250);
     ctx.drawImage(canvases.floor, 0, 100);

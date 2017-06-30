@@ -23,6 +23,9 @@ var canvases = {
     , kavinskyBillboard: document.createElement('canvas')
     , ground: document.createElement('canvas')
     , deepBg1A: document.createElement('canvas')
+    , deepBg2A: document.createElement('canvas')
+    , deepBg3A: document.createElement('canvas')
+    , deepBg4A: document.createElement('canvas')
 };
 
 var ctxs = {
@@ -50,6 +53,9 @@ var ctxs = {
     , kavinskyBillboard: canvases.kavinskyBillboard.getContext("2d")
     , ground: canvases.ground.getContext("2d")
     , deepBg1A: canvases.deepBg1A.getContext("2d")
+    , deepBg2A: canvases.deepBg2A.getContext("2d")
+    , deepBg3A: canvases.deepBg3A.getContext("2d")
+    , deepBg4A: canvases.deepBg4A.getContext("2d")
 }
 
 var preRendered = {
@@ -73,6 +79,9 @@ var preRendered = {
     , KavinskyBillboard: false
     , Ground: false
     , DeepBg1A: false
+    , DeepBg2A: false
+    , DeepBg3A: false
+    , DeepBg4A: false
 }
 
 var allPreRendered = function() {
@@ -98,6 +107,9 @@ var canvasWidths = function() {
     canvases.lightingA.width = worldWidth;
     canvases.lightingB.width = worldWidth;
     canvases.deepBg1A.width = worldWidth;
+    canvases.deepBg2A.width = worldWidth;
+    canvases.deepBg3A.width = worldWidth;
+    canvases.deepBg4A.width = worldWidth;
     canvases.troy.width = 72;
     canvases.troy.height = 37;
     canvases.pigeon.width = 34;
