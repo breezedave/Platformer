@@ -9,6 +9,8 @@ var canvases = {
     , skyBox: document.createElement('canvas')
     , bgA: document.createElement('canvas')
     , bgB: document.createElement('canvas')
+    , fgA: document.createElement('canvas')
+    , fgB: document.createElement('canvas')
     , lampPostA: document.createElement('canvas')
     , lightingOn: document.createElement('canvas')
     , lightingOff: document.createElement('canvas')
@@ -17,7 +19,11 @@ var canvases = {
     , character: document.createElement('canvas')
     , troy: document.createElement('canvas')
     , pigeon: document.createElement('canvas')
-    };
+    , billboard: document.createElement('canvas')
+    , kavinskyBillboard: document.createElement('canvas')
+    , ground: document.createElement('canvas')
+    , deepBg1A: document.createElement('canvas')
+};
 
 var ctxs = {
     floorPanel: canvases.floorPanel.getContext("2d")
@@ -30,6 +36,8 @@ var ctxs = {
     , skyBox: canvases.skyBox.getContext("2d")
     , bgA: canvases.bgA.getContext("2d")
     , bgB: canvases.bgB.getContext("2d")
+    , fgA: canvases.fgA.getContext("2d")
+    , fgB: canvases.fgB.getContext("2d")
     , lampPostA: canvases.lampPostA.getContext("2d")
     , lightingOn: canvases.lightingOn.getContext("2d")
     , lightingOff: canvases.lightingOff.getContext("2d")
@@ -38,6 +46,10 @@ var ctxs = {
     , character: canvases.character.getContext("2d")
     , troy: canvases.troy.getContext("2d")
     , pigeon: canvases.pigeon.getContext("2d")
+    , billboard: canvases.billboard.getContext("2d")
+    , kavinskyBillboard: canvases.kavinskyBillboard.getContext("2d")
+    , ground: canvases.ground.getContext("2d")
+    , deepBg1A: canvases.deepBg1A.getContext("2d")
 }
 
 var preRendered = {
@@ -49,12 +61,18 @@ var preRendered = {
     , ChunkB: false
     , BgA: false
     , BgB: false
+    , FgA: false
+    , FgB: false
     , LightingOn: false
     , LightingOff: false
     , LightingA: false
     , LightingB: false
     , Troy: false
     , Pigeon: false
+    , Billboard: false
+    , KavinskyBillboard: false
+    , Ground: false
+    , DeepBg1A: false
 }
 
 var allPreRendered = function() {
@@ -70,10 +88,16 @@ for(i in canvases) {
 }
 
 var canvasWidths = function() {
-    canvases.bgA.width = 20000;
-    canvases.bgB.width = 20000;
-    canvases.lightingA.width = 20000;
-    canvases.lightingB.width = 20000;
+    var worldWidth = 10000;
+    canvases.skyBox.width = worldWidth;
+    canvases.bgA.width = worldWidth;
+    canvases.bgB.width = worldWidth;
+    canvases.fgA.width = worldWidth;
+    canvases.fgB.width = worldWidth;
+    canvases.ground.width = worldWidth;
+    canvases.lightingA.width = worldWidth;
+    canvases.lightingB.width = worldWidth;
+    canvases.deepBg1A.width = worldWidth;
     canvases.troy.width = 72;
     canvases.troy.height = 37;
     canvases.pigeon.width = 34;
