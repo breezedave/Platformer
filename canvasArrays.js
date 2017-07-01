@@ -26,6 +26,7 @@ var canvases = {
     , deepBg2A: document.createElement('canvas')
     , deepBg3A: document.createElement('canvas')
     , deepBg4A: document.createElement('canvas')
+    , titleCard: document.createElement('canvas')
 };
 
 var ctxs = {
@@ -56,6 +57,7 @@ var ctxs = {
     , deepBg2A: canvases.deepBg2A.getContext("2d")
     , deepBg3A: canvases.deepBg3A.getContext("2d")
     , deepBg4A: canvases.deepBg4A.getContext("2d")
+    , titleCard: canvases.titleCard.getContext("2d")
 }
 
 var preRendered = {
@@ -82,6 +84,7 @@ var preRendered = {
     , DeepBg2A: false
     , DeepBg3A: false
     , DeepBg4A: false
+    , TitleCard: false
     , Audio: false
 }
 
@@ -111,6 +114,7 @@ var canvasWidths = function() {
     canvases.deepBg2A.width = worldWidth;
     canvases.deepBg3A.width = worldWidth;
     canvases.deepBg4A.width = worldWidth;
+    canvases.titleCard.width = 800;
     canvases.troy.width = 72;
     canvases.troy.height = 37;
     canvases.pigeon.width = 34;

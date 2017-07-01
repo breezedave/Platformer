@@ -1,5 +1,56 @@
 var renderVideo = function() {
+    var startRunningPoint = 600;
+    var stopRunningPoint = 15300;
+    var titleCardFadeout = 50;
+    var endCreditFadeIn = 100;
+    var creditDelay = 100;
+
     gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); //Clean
+    if(world.tick >= startRunningPoint && world.tick <= stopRunningPoint + endCreditFadeIn) {
+        renderRunningVideo(world.tick - startRunningPoint);
+    }
+    if(world.tick < startRunningPoint + titleCardFadeout) {
+        if(world.tick >= startRunningPoint) {
+            gameCtx.globalAlpha = 1 - ((world.tick - startRunningPoint) / titleCardFadeout);
+        }
+        gameCtx.drawImage(canvases.titleCard, 0, 0);
+        gameCtx.globalAlpha = 1;
+    }
+    if(world.tick >= stopRunningPoint) {
+        if(world.tick <= stopRunningPoint + endCreditFadeIn) {
+            gameCtx.globalAlpha = ((world.tick - stopRunningPoint) / endCreditFadeIn);
+        }
+        gameCtx.fillStyle = colors.BLACK;
+        gameCtx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+        gameCtx.font = "100px MONOTON";
+        gameCtx.textAlign = "center";
+        gameCtx.strokeText("NIGHTCALL", 400, 280);
+
+        gameCtx.font = "30px Iceland";
+        gameCtx.strokeText("BY KAVINSKY", 645, 310);
+
+        if(world.tick > stopRunningPoint + endCreditFadeIn + creditDelay) {
+            gameCtx.fillStyle = colors.WHITE;
+            gameCtx.font = "20px Iceland";
+            gameCtx.fillText("VIDEO BY DAVE BREEZE", 636, 400);
+
+            gameCtx.fillStyle = colors.WHITE;
+            gameCtx.font = "20px Iceland";
+            gameCtx.fillText("BREEZEDAVE@GOOGLEMAIL.COM", 597, 420);
+        }
+
+        if(world.tick > stopRunningPoint + endCreditFadeIn + (creditDelay * 4)) {
+            gameCtx.fillStyle = colors.WHITE;
+            gameCtx.font = "16px Iceland";
+            gameCtx.fillText("MADE WITHOUT PERMISSION", 642, 570);
+        }
+
+        gameCtx.globalAlpha = 1;
+    }
+}
+
+var renderRunningVideo = function(tick) {
     gameCtx.drawImage(canvases.skyBox, world.x, 0);
     gameCtx.drawImage(canvases.ground, world.x, 300);
     gameCtx.drawImage(canvases.deepBg4A, (world.x * 0.25), 0);
@@ -7,7 +58,7 @@ var renderVideo = function() {
     gameCtx.drawImage(canvases.deepBg2A, (world.x * 0.87), 0);
     gameCtx.drawImage(canvases.deepBg1A, (world.x * 0.95), 0);
 
-    if(world.tick%200 <100) {
+    if(tick%200 <100) {
         gameCtx.drawImage(canvases.bgB, world.x, 0); //Background
     } else {
         gameCtx.drawImage(canvases.bgA, world.x, 0); //Background
@@ -15,13 +66,13 @@ var renderVideo = function() {
 
     gameCtx.drawImage(canvases.character, player.renderX, player.renderY); //Character
 
-    if(world.tick%200 <100) {
+    if(tick%200 <100) {
         gameCtx.drawImage(canvases.fgB, world.x, 0); //Background
     } else {
         gameCtx.drawImage(canvases.fgA, world.x, 0); //Background
     }
 
-    if(world.tick%150 <=20) {
+    if(tick%150 <=20) {
         gameCtx.drawImage(canvases.lightingB, world.x, 0); //Lighting lamp off
     } else {
         gameCtx.drawImage(canvases.lightingA, world.x, 0); //Lighting lamp on
@@ -31,7 +82,7 @@ var renderVideo = function() {
         gameCtx.fillStyle = colors.BLACK;
         gameCtx.textAlign = "end"
         gameCtx.font = "18px arial";
-        gameCtx.fillText(world.tick, 790, 20);
+        gameCtx.fillText(tick, 790, 20);
     }
 }
 
@@ -127,7 +178,6 @@ var checkStarted = function() {
         world.start = true;
     }
 }
-
 
 var buildOrder = [
     {
@@ -229,6 +279,10 @@ var buildOrder = [
     , {
         name: "Deep Background 4A"
         , fn: makeDeepBg4A
+    }
+    , {
+        name: "Title Card"
+        , fn: makeTitleCard
     }
 ]
 

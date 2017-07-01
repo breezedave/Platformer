@@ -157,7 +157,7 @@ var makeGround = function() {
 
 var makeDeepBg1A = function() {
     var ctx = ctxs.deepBg1A;
-    if(!preRendered.KavinskyBillboard) return setTimeout(makeDeepBg1A,10); 
+    if(!preRendered.KavinskyBillboard) return setTimeout(makeDeepBg1A,10);
     ctx.drawImage(canvases.kavinskyBillboard, 1000, 250);
     ctx.drawImage(canvases.kavinskyBillboard, 2000, 250);
     ctx.drawImage(canvases.kavinskyBillboard, 3000, 250);
@@ -474,4 +474,15 @@ var makeKavinskyBillboard = function() {
         preRendered.KavinskyBillboard = true;
     }, false);
     kavinskyBillboard.src = "billboard1.png";
+}
+
+
+var makeTitleCard = function() {
+    var titleCard = new Image();
+    titleCard.addEventListener('load', function() {
+        var ctx = ctxs.titleCard;
+        ctx.drawImage(this, 0, 0);
+        preRendered.TitleCard = true;
+    }, false);
+    titleCard.src = "titleCard.png";
 }
