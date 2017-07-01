@@ -1,9 +1,9 @@
 var renderVideo = function() {
-    var startRunningPoint = 600;
-    var stopRunningPoint = 15300;
-    var titleCardFadeout = 50;
-    var endCreditFadeIn = 100;
-    var creditDelay = 100;
+    var startRunningPoint = world.startRunningPoint;
+    var stopRunningPoint = world.stopRunningPoint;
+    var titleCardFadeout = world.titleCardFadeout;
+    var endCreditFadeIn = world.endCreditFadeIn;
+    var creditDelay = world.creditDelay;
 
     gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); //Clean
     if(world.tick >= startRunningPoint && world.tick <= stopRunningPoint + endCreditFadeIn) {
@@ -51,31 +51,50 @@ var renderVideo = function() {
 }
 
 var renderRunningVideo = function(tick) {
-    gameCtx.drawImage(canvases.skyBox, world.x, 0);
-    gameCtx.drawImage(canvases.ground, world.x, 300);
-    gameCtx.drawImage(canvases.deepBg4A, (world.x * 0.25), 0);
-    gameCtx.drawImage(canvases.deepBg3A, (world.x * 0.7), 0);
-    gameCtx.drawImage(canvases.deepBg2A, (world.x * 0.87), 0);
-    gameCtx.drawImage(canvases.deepBg1A, (world.x * 0.95), 0);
+    world.x = (tick * -3) -100;
+    var currSegment = parseInt(world.x*-1/world.maxCanvasWidth);
+    var relativeX = world.x%world.maxCanvasWidth;
+    gameCtx.drawImage(canvases.skyBox[currSegment+1], relativeX + world.maxCanvasWidth, 0);
+    gameCtx.drawImage(canvases.skyBox[currSegment], relativeX, 0);
+    gameCtx.drawImage(canvases.ground[currSegment+1], relativeX + world.maxCanvasWidth, 300);
+    gameCtx.drawImage(canvases.ground[currSegment], relativeX, 300);
+
+    gameCtx.drawImage(canvases.deepBg4A[parseInt(world.x*-0.25/world.maxCanvasWidth)+1], ((world.x * 0.25)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
+    gameCtx.drawImage(canvases.deepBg4A[parseInt(world.x*-0.25/world.maxCanvasWidth)], (world.x * 0.25)%world.maxCanvasWidth, 0);
+
+    gameCtx.drawImage(canvases.deepBg3A[parseInt(world.x*-0.7/world.maxCanvasWidth)+1], ((world.x * 0.7)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
+    gameCtx.drawImage(canvases.deepBg3A[parseInt(world.x*-0.7/world.maxCanvasWidth)], (world.x * 0.7)%world.maxCanvasWidth, 0);
+
+    gameCtx.drawImage(canvases.deepBg2A[parseInt(world.x*-0.87/world.maxCanvasWidth)+1], ((world.x * 0.87)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
+    gameCtx.drawImage(canvases.deepBg2A[parseInt(world.x*-0.87/world.maxCanvasWidth)], (world.x * 0.87)%world.maxCanvasWidth, 0);
+
+    gameCtx.drawImage(canvases.deepBg1A[parseInt(world.x*-0.95/world.maxCanvasWidth)+1], ((world.x * 0.95)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
+    gameCtx.drawImage(canvases.deepBg1A[parseInt(world.x*-0.95/world.maxCanvasWidth)], (world.x * 0.95)%world.maxCanvasWidth, 0);
 
     if(tick%200 <100) {
-        gameCtx.drawImage(canvases.bgB, world.x, 0); //Background
+        gameCtx.drawImage(canvases.bgB[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Background
+        gameCtx.drawImage(canvases.bgB[currSegment], relativeX, 0); //Background
     } else {
-        gameCtx.drawImage(canvases.bgA, world.x, 0); //Background
+        gameCtx.drawImage(canvases.bgA[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Background
+        gameCtx.drawImage(canvases.bgA[currSegment], relativeX, 0); //Background
     }
 
     gameCtx.drawImage(canvases.character, player.renderX, player.renderY); //Character
 
     if(tick%200 <100) {
-        gameCtx.drawImage(canvases.fgB, world.x, 0); //Background
+        gameCtx.drawImage(canvases.fgB[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Foreground
+        gameCtx.drawImage(canvases.fgB[currSegment], relativeX, 0); //Foreground
     } else {
-        gameCtx.drawImage(canvases.fgA, world.x, 0); //Background
+        gameCtx.drawImage(canvases.fgA[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Foreground
+        gameCtx.drawImage(canvases.fgA[currSegment], relativeX, 0); //Foreground
     }
 
     if(tick%150 <=20) {
-        gameCtx.drawImage(canvases.lightingB, world.x, 0); //Lighting lamp off
+        gameCtx.drawImage(canvases.lightingB[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Lighting lamp off
+        gameCtx.drawImage(canvases.lightingB[currSegment], relativeX, 0); //Lighting lamp off
     } else {
-        gameCtx.drawImage(canvases.lightingA, world.x, 0); //Lighting lamp on
+        gameCtx.drawImage(canvases.lightingA[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Lighting lamp on
+        gameCtx.drawImage(canvases.lightingA[currSegment], relativeX, 0); //Lighting lamp on
     }
 
     if(world.debug) {
@@ -145,12 +164,6 @@ var render = function() {
     window.requestAnimationFrame(render);
 }
 
-var stepWorld = function() {
-    world.x-=1;
-    setTimeout(stepWorld,5);
-    if(world.x <= -9009) world.x = -100;
-}
-
 var playerCtrl = function() {
     if (player.x > 550) player.xD = -0.05;
     if (player.x < 100) player.xD = 0.05;
@@ -171,7 +184,6 @@ var checkRendered = function() {
 
 var checkStarted = function() {
     if(world.reqStart) {
-        stepWorld();
         playerCtrl();
         if(world.sound) song.start(0);
         document.getElementById('canvas').onclick = null;

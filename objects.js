@@ -7,6 +7,14 @@ var makeTroy = function() {
     troyImg.src = "tempChar.png";
 }
 
+var addObjectAt = function(target, canvas, x, y) {
+    var ctx = target[parseInt(x/world.maxCanvasWidth)];
+    ctx.drawImage(canvas, x%world.maxCanvasWidth, y);
+
+    var ctx = target[parseInt(x/world.maxCanvasWidth)+1];
+    ctx.drawImage(canvas, (x%world.maxCanvasWidth) - world.maxCanvasWidth, y);
+}
+
 var makeFloorPanel = function() {
     var tl = [0, 0];
     var tr = [47, 0];
@@ -136,64 +144,64 @@ var makeWoodenRailing = function() {
     }
 
     for(var i = railingLen-1; i>=0; i--) {
-        ctx.drawImage(canvases.woodenHandRail, i * 135, 15);
+        ctx.drawImage(canvases.woodenHandRail, i * world.chunkWidth, 15);
     }
     preRendered.WoodenRailing = true;
 }
 
 var makeSkyBox = function() {
-    var ctx = ctxs.skyBox;
-    ctx.fillStyle = colors.SKY;
-    ctx.fillRect(0, 0, canvases.skyBox.width, 300);
+    for(i in ctxs.skyBox) {
+        var ctx = ctxs.skyBox[i];
+        ctx.fillStyle = colors.SKY;
+        ctx.fillRect(0, 0, world.maxCanvasWidth, 300);
+    }
     preRendered.SkyBox = true;
 }
 
 var makeGround = function() {
-    var ctx = ctxs.ground;
-    ctx.fillStyle = colors.GROUND;
-    ctx.fillRect(0, 0, canvases.ground.width, 200);
+    for(i in ctxs.ground) {
+        var ctx = ctxs.ground[i];
+        ctx.fillStyle = colors.GROUND;
+        ctx.fillRect(0, 0, world.maxCanvasWidth, 200);
+    }
     preRendered.Ground = true;
 }
 
-var makeDeepBg1A = function() {
-    var ctx = ctxs.deepBg1A;
-    if(!preRendered.KavinskyBillboard) return setTimeout(makeDeepBg1A,10);
-    ctx.drawImage(canvases.kavinskyBillboard, 1000, 250);
-    ctx.drawImage(canvases.kavinskyBillboard, 2000, 250);
-    ctx.drawImage(canvases.kavinskyBillboard, 3000, 250);
-    ctx.drawImage(canvases.kavinskyBillboard, 4000, 250);
-    ctx.drawImage(canvases.kavinskyBillboard, 5000, 250);
-    ctx.drawImage(canvases.kavinskyBillboard, 6000, 250);
-    ctx.drawImage(canvases.kavinskyBillboard, 7000, 250);
 
+var makeDeepBg1A = function() {
+    if(!preRendered.KavinskyBillboard) return setTimeout(makeDeepBg1A,10);
+    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 1000, 250);
+    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 2000, 250);
+    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 3000, 250);
+    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 4000, 250);
+    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 5000, 250);
+    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 6000, 250);
+    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 7000, 250);
     preRendered.DeepBg1A = true;
 }
 
 var makeDeepBg2A = function() {
-    var ctx = ctxs.deepBg2A;
-    ctx.clearRect(0, 0, 10000, 600);
-
+    var ctx = ctxs.deepBg2A[0];
+    ctx.clearRect(0, 0, world.maxCanvasWidth, world.viewPort.height);
     preRendered.DeepBg2A = true;
 }
 
 var makeDeepBg3A = function() {
-    var ctx = ctxs.deepBg3A;
     var buildings = new Image();
     buildings.addEventListener('load', function() {
-        for(i =0; i<8; i++) {
-            ctx.drawImage(this, i * 891, 120);
+        for(i=0; i<13; i++) {
+            addObjectAt(ctxs.deepBg3A, this, i*890, 120);
         }
-        preRendered.DeepBg4A = true;
+        preRendered.DeepBg3A = true;
     }, false);
     buildings.src = "buildings.png";
 
     preRendered.DeepBg3A = true;
 }
 
-var makeDeepBg4A = function() {
-    var ctx = ctxs.deepBg4A;
-    ctx.clearRect(0, 0, 10000, 600);
-
+var makeDeepBg4A = function() { //Reserved for sky stuff
+    var ctx = ctxs.deepBg4A[0];
+    ctx.clearRect(0, 0, world.maxCanvasWidth, world.viewPort.height);
     preRendered.DeepBg4A = true;
 }
 
@@ -248,8 +256,8 @@ var makeLampPostA = function() {
 var makechunkA = function() {
     var ctx = ctxs.chunkA;
     ctx.fillStyle = colors.MUD;
-    ctx.fillRect(98, 250, 135, 250);
-    ctx.strokeRect(98, 250, 135, 250);
+    ctx.fillRect(98, 250, world.chunkWidth, 250);
+    ctx.strokeRect(98, 250, world.chunkWidth, 250);
     ctx.drawImage(canvases.floor, 0, 100);
     ctx.drawImage(canvases.woodenRailing, 0, 105);
     preRendered.ChunkA = true;
@@ -258,54 +266,67 @@ var makechunkA = function() {
 var makechunkB = function() {
     var ctx = ctxs.chunkB;
     ctx.fillStyle = colors.MUD;
-    ctx.fillRect(98, 250, 135, 250);
-    ctx.strokeRect(98, 250, 135, 250);
+    ctx.fillRect(98, 250, world.chunkWidth, 250);
+    ctx.strokeRect(98, 250, world.chunkWidth, 250);
     ctx.drawImage(canvases.floor, 0, 100);
     ctx.drawImage(canvases.woodenRailing, 0, 105);
-    ctx.drawImage(canvases.lampPostA, 100, 0);
     preRendered.ChunkB = true;
 }
 
 var makeBgA = function() {
-    var ctx = ctxs.bgA;
-    ctx.clearRect(0, 0, 10000, 600);
-    for(i=chunks; i>=0; i--) {
-        if(i%3 == 1) {
-            ctx.drawImage(canvases.chunkB, i * 135, 290);
+    for(i=world.chunks; i>=0; i--) {
+        var ctx = ctxs.bgA[parseInt(i/CHUNKS_TO_CANVAS)];
+        if(i%5 == 1) {
+            ctx.drawImage(canvases.chunkB, i%CHUNKS_TO_CANVAS * world.chunkWidth, 290);
+            if((i%CHUNKS_TO_CANVAS)==0) {
+                ctx.drawImage(canvases.chunkB, world.chunkWidth * -1, 290);
+            }
         } else {
-            ctx.drawImage(canvases.chunkA, i * 135, 290);
+            ctx.drawImage(canvases.chunkA, i%CHUNKS_TO_CANVAS * world.chunkWidth, 290);
+            if((i%CHUNKS_TO_CANVAS)==0) {
+                ctx.drawImage(canvases.chunkA, world.chunkWidth * -1, 290);
+            }
         }
     }
     preRendered.BgA = true;
 }
 
 var makeBgB = function() {
-    var ctx = ctxs.bgB;
-    ctx.clearRect(0, 0, 10000, 600);
-    for(i=chunks; i>=0; i--) {
-        if(i%3 == 1) {
-            ctx.drawImage(canvases.chunkB, i * 135, 290);
+    for(i=world.chunks; i>=0; i--) {
+        var ctx = ctxs.bgB[parseInt(i/CHUNKS_TO_CANVAS)];
+        if(i%5 == 1) {
+            ctx.drawImage(canvases.chunkB, i%CHUNKS_TO_CANVAS * world.chunkWidth, 290);
+            if((i%CHUNKS_TO_CANVAS)==0) {
+                ctx.drawImage(canvases.chunkB, world.chunkWidth * -1, 290);
+            }
         } else {
-            ctx.drawImage(canvases.chunkA, i * 135, 290);
+            ctx.drawImage(canvases.chunkA, i%CHUNKS_TO_CANVAS * world.chunkWidth, 290);
+            if((i%CHUNKS_TO_CANVAS)==0) {
+                ctx.drawImage(canvases.chunkA, world.chunkWidth * -1, 290);
+            }
         }
     }
     preRendered.BgB = true;
 }
 
 var makeFgA = function() {
-    var ctx = ctxs.fgA;
-    ctx.clearRect(0, 0, 10000, 600);
-    for(i=chunks; i>=0; i--) {
-        ctx.drawImage(canvases.woodenRailing, i * 135 + 91, 490);
+    for(i=world.chunks; i>=0; i--) {
+        var ctx = ctxs.fgA[parseInt(i/CHUNKS_TO_CANVAS)];
+        ctx.drawImage(canvases.woodenRailing, i%CHUNKS_TO_CANVAS * world.chunkWidth, 490);
+        if((i%CHUNKS_TO_CANVAS)==0) {
+            ctx.drawImage(canvases.woodenRailing, world.chunkWidth * -1, 490);
+        }
     }
     preRendered.FgA = true;
 }
 
 var makeFgB = function() {
-    var ctx = ctxs.fgB;
-    ctx.clearRect(0, 0, 10000, 600);
-    for(i=chunks; i>=0; i--) {
-        ctx.drawImage(canvases.woodenRailing, i * 135 + 91, 490);
+    for(i=world.chunks; i>=0; i--) {
+        var ctx = ctxs.fgB[parseInt(i/CHUNKS_TO_CANVAS)];
+        ctx.drawImage(canvases.woodenRailing, i%CHUNKS_TO_CANVAS * world.chunkWidth, 490);
+        if((i%CHUNKS_TO_CANVAS)==0) {
+            ctx.drawImage(canvases.woodenRailing, world.chunkWidth * -1, 490);
+        }
     }
     preRendered.FgB = true;
 }
@@ -314,17 +335,17 @@ var makePigeon = function() {
     var pigeonImg = new Image();
     pigeonImg.addEventListener('load', function() {
         var ctxPig = ctxs.pigeon;
-        var ctxA = ctxs.bgA;
-        var ctxB = ctxs.bgB;
         ctxPig.drawImage(this,0,-12);
-        ctxA.drawImage(canvases.pigeon, 3067, 275);
-        ctxA.drawImage(canvases.pigeon, 5497, 275);
-        ctxA.drawImage(canvases.pigeon, 7117, 275);
+        var lightingCount = parseInt(world.worldWidth/405)-1;
+        for(i=0; i<lightingCount; i++) {
+            if(i%4==3) addObjectAt(ctxs.bgA, canvases.pigeon, i*405+100, 275);
+        }
         ctxPig.clearRect(0, 0, 100, 100);
         ctxPig.drawImage(this,5,-76);
-        ctxB.drawImage(canvases.pigeon, 3067, 275);
-        ctxB.drawImage(canvases.pigeon, 5497, 275);
-        ctxB.drawImage(canvases.pigeon, 7117, 275);
+        var lightingCount = parseInt(world.worldWidth/405)-1;
+        for(i=0; i<lightingCount; i++) {
+            if(i%4==3) addObjectAt(ctxs.bgB, canvases.pigeon, i*405+100, 275);
+        }
         preRendered.Pigeon = true;
     }, false);
     pigeonImg.src = "pigeon.png";
@@ -359,27 +380,27 @@ var makeLightingOn = function() {
 
 var makeLightingOff = function() {
     ctxs.lightingOff.fillStyle = colors.DARKNESS;
-    ctxs.lightingOff.fillRect(0, 0, 405, 600);
+    ctxs.lightingOff.fillRect(0, 0, 405, world.viewPort.height);
     preRendered.LightingOff = true;
 }
 
 var makeLightingA = function() {
-    var ctx = ctxs.lightingA;
-    ctx.fillStyle = colors.DARKNESS
-    ctx.fillRect(0, 0, 135, 600);
-    for(i=chunks; i>=0; i--) {
-        ctx.drawImage(canvases.lightingOn, i * 405 + 135, 0);
+    var lightingCount = parseInt(world.worldWidth/405)-1;
+    for(var i=0; i<lightingCount; i++) {
+        addObjectAt(ctxs.bgA, canvases.lampPostA, i*405 + 100, 290);
+        addObjectAt(ctxs.bgB, canvases.lampPostA, i*405 + 100, 290);
+        addObjectAt(ctxs.lightingA, canvases.lightingOn, i*405, 0);
     }
     preRendered.LightingA = true;
 }
 
 var makeLightingB = function() {
-    var ctx = ctxs.lightingB;
-    for(i=chunks; i>=-1; i--) {
+    var lightingCount = parseInt(world.worldWidth/405)-1;
+    for(var i=0; i<lightingCount; i++) {
         if(i%5 == 0|| i%8 == 0) {
-            ctx.drawImage(canvases.lightingOff, i * 405 + 135, 0);
+            addObjectAt(ctxs.lightingB, canvases.lightingOff, i*405, 0);
         } else {
-            ctx.drawImage(canvases.lightingOn, i * 405 + 135, 0);
+            addObjectAt(ctxs.lightingB, canvases.lightingOn, i*405, 0);
         }
     }
     preRendered.LightingB = true;
@@ -441,22 +462,22 @@ var makeBillboard = function() {
     ctx.beginPath();
     ctx.moveTo(43, 126);
     ctx.lineTo(250, 126);
-    ctx.lineTo(250, 135);
-    ctx.lineTo(43, 135);
+    ctx.lineTo(250, world.chunkWidth);
+    ctx.lineTo(43, world.chunkWidth);
     ctx.lineTo(43, 126);
     for(i=0; i<23; i++) {
         if(i%2 ==0) {
-            ctx.lineTo(i*9+52, 135);
+            ctx.lineTo(i*9+52, world.chunkWidth);
         } else {
             ctx.lineTo(i*9+52, 126);
         }
     }
-    ctx.moveTo(43, 135);
+    ctx.moveTo(43, world.chunkWidth);
     for(i=0; i<23; i++) {
         if(i%2 ==0) {
             ctx.lineTo(i*9+52, 126);
         } else {
-            ctx.lineTo(i*9+52, 135);
+            ctx.lineTo(i*9+52, world.chunkWidth);
         }
     }
     ctx.stroke();
