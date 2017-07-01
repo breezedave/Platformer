@@ -2,17 +2,21 @@ var makeTroy = function() {
     var troyImg = new Image();
     troyImg.addEventListener('load', function() {
         ctxs.troy.drawImage(this,0,0);
+        canvasUsed.troy = true;
         preRendered.Troy = true;
     }, false);
     troyImg.src = "tempChar.png";
 }
 
 var addObjectAt = function(target, canvas, x, y) {
-    var ctx = target[parseInt(x/world.maxCanvasWidth)];
-    ctx.drawImage(canvas, x%world.maxCanvasWidth, y);
-
-    var ctx = target[parseInt(x/world.maxCanvasWidth)+1];
-    ctx.drawImage(canvas, (x%world.maxCanvasWidth) - world.maxCanvasWidth, y);
+    try {
+        var ctx = ctxs[target][parseInt(x/world.maxCanvasWidth)];
+        ctx.drawImage(canvas, x%world.maxCanvasWidth, y);
+        canvasUsed[target][parseInt(x/world.maxCanvasWidth)] = true;
+        var ctx = ctxs[target][parseInt(x/world.maxCanvasWidth)+1];
+        canvasUsed[target][parseInt(x/world.maxCanvasWidth)+1] = true;
+        ctx.drawImage(canvas, (x%world.maxCanvasWidth) - world.maxCanvasWidth, y);
+    } catch(exc) {}
 }
 
 var makeFloorPanel = function() {
@@ -29,6 +33,7 @@ var makeFloorPanel = function() {
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
+    canvasUsed.floorPanel = true;
 }
 
 var makeWoodenPost = function() {
@@ -56,6 +61,7 @@ var makeWoodenPost = function() {
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
+    canvasUsed.woodenPost = true;
 }
 
 var makeWoodenHandRail = function() {
@@ -90,6 +96,7 @@ var makeWoodenHandRail = function() {
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
+    canvasUsed.woodenHandRail = true;
 }
 
 var createCharacter = function(i) {
@@ -100,6 +107,7 @@ var createCharacter = function(i) {
     } else {
         ctx.drawImage(canvases.troy, -48, 0);
     }
+    canvasUsed.character = true;
 }
 
 var makeFloor = function() {
@@ -129,6 +137,7 @@ var makeFloor = function() {
             }
         }
     }
+    canvasUsed.floor = true;
     preRendered.Floor = true;
 }
 
@@ -146,6 +155,7 @@ var makeWoodenRailing = function() {
     for(var i = railingLen-1; i>=0; i--) {
         ctx.drawImage(canvases.woodenHandRail, i * world.chunkWidth, 15);
     }
+    canvasUsed.woodenRailing = true;
     preRendered.WoodenRailing = true;
 }
 
@@ -154,6 +164,7 @@ var makeSkyBox = function() {
         var ctx = ctxs.skyBox[i];
         ctx.fillStyle = colors.SKY;
         ctx.fillRect(0, 0, world.maxCanvasWidth, 300);
+        canvasUsed.skyBox[i] = true;
     }
     preRendered.SkyBox = true;
 }
@@ -163,6 +174,7 @@ var makeGround = function() {
         var ctx = ctxs.ground[i];
         ctx.fillStyle = colors.GROUND;
         ctx.fillRect(0, 0, world.maxCanvasWidth, 200);
+        canvasUsed.ground[i] = true;
     }
     preRendered.Ground = true;
 }
@@ -170,27 +182,27 @@ var makeGround = function() {
 
 var makeDeepBg1A = function() {
     if(!preRendered.KavinskyBillboard) return setTimeout(makeDeepBg1A,10);
-    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 1000, 250);
-    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 2000, 250);
-    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 3000, 250);
-    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 4000, 250);
-    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 5000, 250);
-    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 6000, 250);
-    addObjectAt(ctxs.deepBg1A, canvases.kavinskyBillboard, 7000, 250);
+    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 1000, 250);
+    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 2000, 250);
+    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 3000, 250);
+    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 4000, 250);
+    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 5000, 250);
+    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 6000, 250);
+    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 7000, 250);
     preRendered.DeepBg1A = true;
 }
 
 var makeDeepBg2A = function() {
-    var ctx = ctxs.deepBg2A[0];
-    ctx.clearRect(0, 0, world.maxCanvasWidth, world.viewPort.height);
+    //var ctx = ctxs.deepBg2A[0];
+    //ctx.clearRect(0, 0, world.maxCanvasWidth, world.viewPort.height);
     preRendered.DeepBg2A = true;
 }
 
 var makeDeepBg3A = function() {
     var buildings = new Image();
     buildings.addEventListener('load', function() {
-        for(i=0; i<13; i++) {
-            addObjectAt(ctxs.deepBg3A, this, i*890, 120);
+        for(i=0; i<56; i++) {
+            addObjectAt("deepBg3A", this, i*890, 120);
         }
         preRendered.DeepBg3A = true;
     }, false);
@@ -200,8 +212,8 @@ var makeDeepBg3A = function() {
 }
 
 var makeDeepBg4A = function() { //Reserved for sky stuff
-    var ctx = ctxs.deepBg4A[0];
-    ctx.clearRect(0, 0, world.maxCanvasWidth, world.viewPort.height);
+    //var ctx = ctxs.deepBg4A[0];
+    //ctx.clearRect(0, 0, world.maxCanvasWidth, world.viewPort.height);
     preRendered.DeepBg4A = true;
 }
 
@@ -250,6 +262,7 @@ var makeLampPostA = function() {
 
     ctx.fill();
     ctx.stroke();
+    canvasUsed.lampPostA = true;
     preRendered.LampPostA = true;
 }
 
@@ -260,6 +273,7 @@ var makechunkA = function() {
     ctx.strokeRect(98, 250, world.chunkWidth, 250);
     ctx.drawImage(canvases.floor, 0, 100);
     ctx.drawImage(canvases.woodenRailing, 0, 105);
+    canvasUsed.chunkA = true;
     preRendered.ChunkA = true;
 }
 
@@ -270,6 +284,7 @@ var makechunkB = function() {
     ctx.strokeRect(98, 250, world.chunkWidth, 250);
     ctx.drawImage(canvases.floor, 0, 100);
     ctx.drawImage(canvases.woodenRailing, 0, 105);
+    canvasUsed.chunkB = true;
     preRendered.ChunkB = true;
 }
 
@@ -287,6 +302,7 @@ var makeBgA = function() {
                 ctx.drawImage(canvases.chunkA, world.chunkWidth * -1, 290);
             }
         }
+        canvasUsed.bgA[parseInt(i/CHUNKS_TO_CANVAS)] = true;
     }
     preRendered.BgA = true;
 }
@@ -305,6 +321,7 @@ var makeBgB = function() {
                 ctx.drawImage(canvases.chunkA, world.chunkWidth * -1, 290);
             }
         }
+        canvasUsed.bgB[parseInt(i/CHUNKS_TO_CANVAS)] = true;
     }
     preRendered.BgB = true;
 }
@@ -316,6 +333,7 @@ var makeFgA = function() {
         if((i%CHUNKS_TO_CANVAS)==0) {
             ctx.drawImage(canvases.woodenRailing, world.chunkWidth * -1, 490);
         }
+        canvasUsed.fgA[parseInt(i/CHUNKS_TO_CANVAS)] = true;
     }
     preRendered.FgA = true;
 }
@@ -327,6 +345,7 @@ var makeFgB = function() {
         if((i%CHUNKS_TO_CANVAS)==0) {
             ctx.drawImage(canvases.woodenRailing, world.chunkWidth * -1, 490);
         }
+        canvasUsed.fgB[parseInt(i/CHUNKS_TO_CANVAS)] = true;
     }
     preRendered.FgB = true;
 }
@@ -338,14 +357,15 @@ var makePigeon = function() {
         ctxPig.drawImage(this,0,-12);
         var lightingCount = parseInt(world.worldWidth/405)-1;
         for(i=0; i<lightingCount; i++) {
-            if(i%4==3) addObjectAt(ctxs.bgA, canvases.pigeon, i*405+100, 275);
+            if(i%4==3) addObjectAt("bgA", canvases.pigeon, i*405+100, 275);
         }
         ctxPig.clearRect(0, 0, 100, 100);
         ctxPig.drawImage(this,5,-76);
         var lightingCount = parseInt(world.worldWidth/405)-1;
         for(i=0; i<lightingCount; i++) {
-            if(i%4==3) addObjectAt(ctxs.bgB, canvases.pigeon, i*405+100, 275);
+            if(i%4==3) addObjectAt("bgB", canvases.pigeon, i*405+100, 275);
         }
+        canvasUsed.pigeon = true;
         preRendered.Pigeon = true;
     }, false);
     pigeonImg.src = "pigeon.png";
@@ -375,21 +395,24 @@ var makeLightingOn = function() {
 
     ctx.closePath();
     ctx.fill();
+    canvasUsed.LightingOn = true;
     preRendered.LightingOn = true;
 }
 
 var makeLightingOff = function() {
-    ctxs.lightingOff.fillStyle = colors.DARKNESS;
-    ctxs.lightingOff.fillRect(0, 0, 405, world.viewPort.height);
+    var ctx = ctxs.lightingOff;
+    ctx.fillStyle = colors.DARKNESS;
+    ctx.fillRect(0, 0, 405, world.viewPort.height);
+    canvasUsed.lightingOff = true;
     preRendered.LightingOff = true;
 }
 
 var makeLightingA = function() {
     var lightingCount = parseInt(world.worldWidth/405)-1;
     for(var i=0; i<lightingCount; i++) {
-        addObjectAt(ctxs.bgA, canvases.lampPostA, i*405 + 100, 290);
-        addObjectAt(ctxs.bgB, canvases.lampPostA, i*405 + 100, 290);
-        addObjectAt(ctxs.lightingA, canvases.lightingOn, i*405, 0);
+        addObjectAt("bgA", canvases.lampPostA, i*405 + 100, 290);
+        addObjectAt("bgB", canvases.lampPostA, i*405 + 100, 290);
+        addObjectAt("lightingA", canvases.lightingOn, i*405, 0);
     }
     preRendered.LightingA = true;
 }
@@ -398,9 +421,9 @@ var makeLightingB = function() {
     var lightingCount = parseInt(world.worldWidth/405)-1;
     for(var i=0; i<lightingCount; i++) {
         if(i%5 == 0|| i%8 == 0) {
-            addObjectAt(ctxs.lightingB, canvases.lightingOff, i*405, 0);
+            addObjectAt("lightingB", canvases.lightingOff, i*405, 0);
         } else {
-            addObjectAt(ctxs.lightingB, canvases.lightingOn, i*405, 0);
+            addObjectAt("lightingB", canvases.lightingOn, i*405, 0);
         }
     }
     preRendered.LightingB = true;
@@ -444,7 +467,6 @@ var makeBillboard = function() {
     ctx.lineTo(20, 143);
     ctx.lineTo(38, 163);
 
-
     ctx.fill();
 
     ctx.strokeStyle = colors.BLACK;
@@ -483,6 +505,7 @@ var makeBillboard = function() {
     ctx.stroke();
     ctx.closePath();
 
+    canvasUsed.billboard = true;
     preRendered.Billboard = true;
 }
 
@@ -492,6 +515,7 @@ var makeKavinskyBillboard = function() {
         var ctx = ctxs.kavinskyBillboard;
         ctx.drawImage(canvases.billboard, 0, 0);
         ctx.drawImage(this, 49, 6);
+        canvasUsed.kavinskyBillboard = true;
         preRendered.KavinskyBillboard = true;
     }, false);
     kavinskyBillboard.src = "billboard1.png";
@@ -503,6 +527,7 @@ var makeTitleCard = function() {
     titleCard.addEventListener('load', function() {
         var ctx = ctxs.titleCard;
         ctx.drawImage(this, 0, 0);
+        canvasUsed.titleCard = true;
         preRendered.TitleCard = true;
     }, false);
     titleCard.src = "titleCard.png";

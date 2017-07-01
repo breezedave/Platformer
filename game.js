@@ -50,58 +50,91 @@ var renderVideo = function() {
     }
 }
 
+var renderSkyAndGround = function(currSegment, relativeX) {
+    if(canvasUsed.skyBox[currSegment+1]) gameCtx.drawImage(canvases.skyBox[currSegment+1], relativeX + world.maxCanvasWidth, 0);
+    if(canvasUsed.skyBox[currSegment]) gameCtx.drawImage(canvases.skyBox[currSegment], relativeX, 0);
+    if(canvasUsed.ground[currSegment+1]) gameCtx.drawImage(canvases.ground[currSegment+1], relativeX + world.maxCanvasWidth, 300);
+    if(canvasUsed.ground[currSegment]) gameCtx.drawImage(canvases.ground[currSegment], relativeX, 300);
+}
+
+var renderDeepBG4 = function() {
+    var canvArray = parseInt(world.x*-0.25/world.maxCanvasWidth);
+    if(canvasUsed.deepBg4A[canvArray+1]) gameCtx.drawImage(canvases.deepBg4A[canvArray+1], ((world.x * 0.25)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
+    if(canvasUsed.deepBg4A[canvArray]) gameCtx.drawImage(canvases.deepBg4A[canvArray], (world.x * 0.25)%world.maxCanvasWidth, 0);
+}
+var renderDeepBG3 = function() {
+    var canvArray = parseInt(world.x*-0.7/world.maxCanvasWidth);
+    if(canvasUsed.deepBg3A[canvArray+1]) gameCtx.drawImage(canvases.deepBg3A[canvArray+1], ((world.x * 0.7)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
+    if(canvasUsed.deepBg3A[canvArray]) gameCtx.drawImage(canvases.deepBg3A[canvArray], (world.x * 0.7)%world.maxCanvasWidth, 0);
+}
+var renderDeepBG2 = function() {
+    var canvArray = parseInt(world.x*-0.87/world.maxCanvasWidth);
+    if(canvasUsed.deepBg2A[canvArray+1]) gameCtx.drawImage(canvases.deepBg2A[canvArray+1], ((world.x * 0.87)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
+    if(canvasUsed.deepBg2A[canvArray]) gameCtx.drawImage(canvases.deepBg2A[canvArray], (world.x * 0.87)%world.maxCanvasWidth, 0);
+}
+var renderDeepBG1 = function() {
+    var canvArray = parseInt(world.x*-0.95/world.maxCanvasWidth);
+    if(canvasUsed.deepBg1A[canvArray+1]) gameCtx.drawImage(canvases.deepBg1A[canvArray+1], ((world.x * 0.95)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
+    if(canvasUsed.deepBg1A[canvArray]) gameCtx.drawImage(canvases.deepBg1A[canvArray], (world.x * 0.95)%world.maxCanvasWidth, 0);
+}
+
+var renderBG = function(tick, currSegment, relativeX) {
+    if(tick%200 <100) {
+        if(canvasUsed.bgB[currSegment+1]) gameCtx.drawImage(canvases.bgB[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Background
+        if(canvasUsed.bgB[currSegment]) gameCtx.drawImage(canvases.bgB[currSegment], relativeX, 0); //Background
+    } else {
+        if(canvasUsed.bgA[currSegment+1]) gameCtx.drawImage(canvases.bgA[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Background
+        if(canvasUsed.bgA[currSegment]) gameCtx.drawImage(canvases.bgA[currSegment], relativeX, 0); //Background
+    }
+}
+
+var renderPlayer = function() {
+    gameCtx.drawImage(canvases.character, player.renderX, player.renderY); //Character
+}
+
+var renderFG = function(tick, currSegment, relativeX) {
+    if(tick%200 <100) {
+        if(canvasUsed.fgB[currSegment+1]) gameCtx.drawImage(canvases.fgB[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Foreground
+        if(canvasUsed.fgB[currSegment]) gameCtx.drawImage(canvases.fgB[currSegment], relativeX, 0); //Foreground
+    } else {
+        if(canvasUsed.fgA[currSegment+1]) gameCtx.drawImage(canvases.fgA[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Foreground
+        if(canvasUsed.fgA[currSegment]) gameCtx.drawImage(canvases.fgA[currSegment], relativeX, 0); //Foreground
+    }
+}
+
+var renderLighting = function(tick, currSegment, relativeX) {
+    if(tick%150 <=20) {
+        if(canvasUsed.lightingB[currSegment+1]) gameCtx.drawImage(canvases.lightingB[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Lighting lamp off
+        if(canvasUsed.lightingB[currSegment]) gameCtx.drawImage(canvases.lightingB[currSegment], relativeX, 0); //Lighting lamp off
+    } else {
+        if(canvasUsed.lightingA[currSegment+1]) gameCtx.drawImage(canvases.lightingA[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Lighting lamp on
+        if(canvasUsed.lightingA[currSegment]) gameCtx.drawImage(canvases.lightingA[currSegment], relativeX, 0); //Lighting lamp on
+    }
+}
+
+var renderDebug = function(tick) {
+    gameCtx.fillStyle = colors.BLACK;
+    gameCtx.textAlign = "end"
+    gameCtx.font = "18px arial";
+    gameCtx.fillText(tick, world.viewPort.width-10, 20);
+}
+
 var renderRunningVideo = function(tick) {
     world.x = (tick * -3) -100;
     var currSegment = parseInt(world.x*-1/world.maxCanvasWidth);
     var relativeX = world.x%world.maxCanvasWidth;
-    gameCtx.drawImage(canvases.skyBox[currSegment+1], relativeX + world.maxCanvasWidth, 0);
-    gameCtx.drawImage(canvases.skyBox[currSegment], relativeX, 0);
-    gameCtx.drawImage(canvases.ground[currSegment+1], relativeX + world.maxCanvasWidth, 300);
-    gameCtx.drawImage(canvases.ground[currSegment], relativeX, 300);
-
-    gameCtx.drawImage(canvases.deepBg4A[parseInt(world.x*-0.25/world.maxCanvasWidth)+1], ((world.x * 0.25)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
-    gameCtx.drawImage(canvases.deepBg4A[parseInt(world.x*-0.25/world.maxCanvasWidth)], (world.x * 0.25)%world.maxCanvasWidth, 0);
-
-    gameCtx.drawImage(canvases.deepBg3A[parseInt(world.x*-0.7/world.maxCanvasWidth)+1], ((world.x * 0.7)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
-    gameCtx.drawImage(canvases.deepBg3A[parseInt(world.x*-0.7/world.maxCanvasWidth)], (world.x * 0.7)%world.maxCanvasWidth, 0);
-
-    gameCtx.drawImage(canvases.deepBg2A[parseInt(world.x*-0.87/world.maxCanvasWidth)+1], ((world.x * 0.87)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
-    gameCtx.drawImage(canvases.deepBg2A[parseInt(world.x*-0.87/world.maxCanvasWidth)], (world.x * 0.87)%world.maxCanvasWidth, 0);
-
-    gameCtx.drawImage(canvases.deepBg1A[parseInt(world.x*-0.95/world.maxCanvasWidth)+1], ((world.x * 0.95)%world.maxCanvasWidth) + world.maxCanvasWidth, 0);
-    gameCtx.drawImage(canvases.deepBg1A[parseInt(world.x*-0.95/world.maxCanvasWidth)], (world.x * 0.95)%world.maxCanvasWidth, 0);
-
-    if(tick%200 <100) {
-        gameCtx.drawImage(canvases.bgB[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Background
-        gameCtx.drawImage(canvases.bgB[currSegment], relativeX, 0); //Background
-    } else {
-        gameCtx.drawImage(canvases.bgA[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Background
-        gameCtx.drawImage(canvases.bgA[currSegment], relativeX, 0); //Background
-    }
-
-    gameCtx.drawImage(canvases.character, player.renderX, player.renderY); //Character
-
-    if(tick%200 <100) {
-        gameCtx.drawImage(canvases.fgB[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Foreground
-        gameCtx.drawImage(canvases.fgB[currSegment], relativeX, 0); //Foreground
-    } else {
-        gameCtx.drawImage(canvases.fgA[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Foreground
-        gameCtx.drawImage(canvases.fgA[currSegment], relativeX, 0); //Foreground
-    }
-
-    if(tick%150 <=20) {
-        gameCtx.drawImage(canvases.lightingB[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Lighting lamp off
-        gameCtx.drawImage(canvases.lightingB[currSegment], relativeX, 0); //Lighting lamp off
-    } else {
-        gameCtx.drawImage(canvases.lightingA[currSegment+1], relativeX + world.maxCanvasWidth, 0); //Lighting lamp on
-        gameCtx.drawImage(canvases.lightingA[currSegment], relativeX, 0); //Lighting lamp on
-    }
+    renderSkyAndGround(currSegment, relativeX);
+    renderDeepBG4();
+    renderDeepBG3();
+    renderDeepBG2();
+    renderDeepBG1();
+    renderBG(tick, currSegment, relativeX);
+    renderPlayer();
+    renderFG(tick, currSegment, relativeX);
+    renderLighting(tick, currSegment, relativeX);
 
     if(world.debug) {
-        gameCtx.fillStyle = colors.BLACK;
-        gameCtx.textAlign = "end"
-        gameCtx.font = "18px arial";
-        gameCtx.fillText(tick, 790, 20);
+        renderDebug(tick);
     }
 }
 
@@ -168,8 +201,8 @@ var playerCtrl = function() {
     if (player.x > 550) player.xD = -0.05;
     if (player.x < 100) player.xD = 0.05;
     player.x += player.xD;
-    player.renderX = player.x;
-    player.renderY = player.y;
+    player.renderX = parseInt(player.x);
+    player.renderY = parseInt(player.y);
 
     createCharacter(player.frame);
     player.frame = (player.frame+1)%60;

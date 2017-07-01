@@ -4,7 +4,7 @@ var world = {
     , debug: false
     , preTick: 0
     , tick: 0
-    , sound: true
+    , sound: false
     , startRunningPoint: 600
     , stopRunningPoint: 15300
     , titleCardFadeout: 50
@@ -36,3 +36,6 @@ var gameCanvas = document.getElementById('canvas');
 var gameCtx= gameCanvas.getContext("2d");
 gameCanvas.width = world.viewPort.width;
 gameCanvas.height = world.viewPort.height;
+
+document.body.style.background = "black";
+gameCanvas.style.margin = "100px 200px";

@@ -15,7 +15,6 @@ var canvases = {
     , billboard: document.createElement('canvas')
     , kavinskyBillboard: document.createElement('canvas')
     , titleCard: document.createElement('canvas')
-
     , skyBox: []
     , bgA: []
     , bgB: []
@@ -47,7 +46,6 @@ var ctxs = {
     , billboard: canvases.billboard.getContext("2d")
     , kavinskyBillboard: canvases.kavinskyBillboard.getContext("2d")
     , titleCard: canvases.titleCard.getContext("2d")
-
     , skyBox: []
     , bgA: []
     , bgB: []
@@ -76,7 +74,6 @@ var preRendered = {
     , KavinskyBillboard: false
     , TitleCard: false
     , Audio: false
-
     , SkyBox: false
     , BgA: false
     , BgB: false
@@ -89,6 +86,33 @@ var preRendered = {
     , DeepBg2A: false
     , DeepBg3A: false
     , DeepBg4A: false
+}
+
+var canvasUsed = {
+    floor: false
+    , woodenRailing: false
+    , lampPostA: false
+    , chunkA: false
+    , chunkB: false
+    , lightingOn: false
+    , lightingOff: false
+    , troy: false
+    , pigeon: false
+    , billboard: false
+    , kavinskyBillboard: false
+    , titleCard: false
+    , skyBox: []
+    , bgA: []
+    , bgB: []
+    , fgA: []
+    , fgB: []
+    , ground: []
+    , lightingA: []
+    , lightingB: []
+    , deepBg1A: []
+    , deepBg2A: []
+    , deepBg3A: []
+    , deepBg4A: []
 }
 
 var allPreRendered = function() {
@@ -129,6 +153,7 @@ var canvasWidths = function() {
             canvas.height = world.viewPort.height;
             var ctx = canvas.getContext("2d");
             canvases[canvs[canv]].push(canvas);
+            canvasUsed[canvs[canv]].push(false);
             ctxs[canvs[canv]].push(ctx);
         }
     };
