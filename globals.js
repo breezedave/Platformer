@@ -8,8 +8,11 @@ gameCanvas.height = 600;
 var world = {
     x: -100
     , rendered: false
+    , start: false
+    , debug: false
+    , preTick: 0
     , tick: 0
-    , debug: true
+    , sound: true
 }
 
 var player = {

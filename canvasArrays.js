@@ -82,6 +82,7 @@ var preRendered = {
     , DeepBg2A: false
     , DeepBg3A: false
     , DeepBg4A: false
+    , Audio: false
 }
 
 var allPreRendered = function() {

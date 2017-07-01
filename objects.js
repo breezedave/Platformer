@@ -157,6 +157,7 @@ var makeGround = function() {
 
 var makeDeepBg1A = function() {
     var ctx = ctxs.deepBg1A;
+    if(!preRendered.KavinskyBillboard) return setTimeout(makeDeepBg1A,10); 
     ctx.drawImage(canvases.kavinskyBillboard, 1000, 250);
     ctx.drawImage(canvases.kavinskyBillboard, 2000, 250);
     ctx.drawImage(canvases.kavinskyBillboard, 3000, 250);
