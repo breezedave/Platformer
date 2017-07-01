@@ -4,7 +4,7 @@ var world = {
     , debug: false
     , preTick: 0
     , tick: 0
-    , sound: false
+    , sound: true
     , startRunningPoint: 600
     , stopRunningPoint: 15300
     , titleCardFadeout: 50
