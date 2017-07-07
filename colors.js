@@ -21,4 +21,5 @@ var colors = {
     , WHITE: "RGBA(255, 255, 255, 1)"
     , LIGHT_STEEL: "RGBA(120, 120, 120, 1)"
     , DARK_STEEL: "RGBA(100, 100, 100, 1)"
+    , BUBBLE: "RGBA(255, 255, 255, 0.75)"
 }

@@ -90,6 +90,8 @@ var renderBG = function(tick, currSegment, relativeX) {
 
 var renderPlayer = function() {
     gameCtx.drawImage(canvases.character, player.renderX, player.renderY); //Character
+    var bubble = getBubble();
+    if(bubble) {gameCtx.drawImage(bubble, player.renderX + 20, player.renderY - (bubble.height - 15))}; //Speech Bubble
 }
 
 var renderFG = function(tick, currSegment, relativeX) {
@@ -209,6 +211,14 @@ var playerCtrl = function() {
     setTimeout(playerCtrl,5);
 }
 
+var getBubble = function() {
+    for(var i=0; i<canvases.speechBubbles.length; i++) {
+        var bubble = canvases.speechBubbles[i];
+        if(bubble.sTick <= world.tick && bubble.eTick >= world.tick) return bubble.canv;
+    }
+    return false;
+}
+
 var checkRendered = function() {
     if(allPreRendered()) {
         world.rendered = true;
@@ -219,7 +229,11 @@ var checkStarted = function() {
     if(world.reqStart) {
         playerCtrl();
         if(world.sound) song.start(0);
-        document.getElementById('canvas').onclick = null;
+        if(world.debug) {
+            document.getElementById('canvas').onclick = function() {clickAtPoint.push(world.tick);}
+        } else {
+            document.getElementById('canvas').onclick = null;
+        }
         world.start = true;
     }
 }
@@ -328,6 +342,10 @@ var buildOrder = [
     , {
         name: "Title Card"
         , fn: makeTitleCard
+    }
+    , {
+        name: "Speech Bubbles"
+        , fn: makeSpeechBubbles
     }
 ]
 

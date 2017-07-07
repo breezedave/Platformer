@@ -8,6 +8,222 @@ var makeTroy = function() {
     troyImg.src = "tempChar.png";
 }
 
+var addSpeechBubble = function(sTick, eTick, text, width, height) {
+    var line = 4;
+    var bR1 = 16;
+    var bR2 = 36;
+
+    var canv = document.createElement('canvas');
+    canv.width = width;
+    canv.height = height + (line * 5);
+    var ctx = canv.getContext("2d");
+    ctx.fillStyle = colors.BLACK;
+    ctx.lineWidth = 2;
+    ctx.font = "10px Roboto Mono";
+    ctx.textAlign = "center";
+    ctx.beginPath();
+
+    //top
+    ctx.moveTo(line * 2, 0);
+    ctx.lineTo(width - line * 2, 0);
+    ctx.lineTo(width - line * 2, line);
+    ctx.lineTo(line * 2, line);
+    ctx.lineTo(line * 2, 0);
+
+    //top-right
+    ctx.moveTo(width - line * 2, line);
+    ctx.lineTo(width - line, line);
+    ctx.lineTo(width - line, line * 2);
+    ctx.lineTo(width - line * 2, line * 2);
+    ctx.lineTo(width - line * 2, line);
+
+    //right
+    ctx.moveTo(width - line, line * 2);
+    ctx.lineTo(width, line * 2);
+    ctx.lineTo(width, height - line * 2);
+    ctx.lineTo(width - line, height - line * 2);
+    ctx.lineTo(width - line, line * 2);
+
+    //bottom-right
+    ctx.moveTo(width - line * 2, height - line * 2);
+    ctx.lineTo(width - line, height - line * 2);
+    ctx.lineTo(width - line, height - line);
+    ctx.lineTo(width - line * 2, height - line);
+    ctx.lineTo(width - line * 2, height - line * 2);
+
+    //bottom-2
+    ctx.moveTo(bR2, height - line);
+    ctx.lineTo(width - line * 2, height - line);
+    ctx.lineTo(width - line * 2, height);
+    ctx.lineTo(bR2, height);
+    ctx.lineTo(bR2, height - line);
+
+    //bottom-2
+    ctx.moveTo(line * 2, height - line);
+    ctx.lineTo(bR1, height - line);
+    ctx.lineTo(bR1, height);
+    ctx.lineTo(line * 2, height);
+    ctx.lineTo(line * 2, height - line);
+
+    //bottom-left
+    ctx.moveTo(line, height - line * 2);
+    ctx.lineTo(line * 2, height - line * 2);
+    ctx.lineTo(line * 2, height - line);
+    ctx.lineTo(line, height - line);
+    ctx.lineTo(line, height - line * 2);
+
+    //left
+    ctx.moveTo(0, line * 2);
+    ctx.lineTo(line, line * 2);
+    ctx.lineTo(line, height - line * 2);
+    ctx.lineTo(0, height - line * 2);
+    ctx.lineTo(0, line * 2);
+
+    //top-left
+    ctx.moveTo(line, line);
+    ctx.lineTo(line * 2, line);
+    ctx.lineTo(line * 2, line * 2);
+    ctx.lineTo(line, line * 2);
+    ctx.lineTo(line, line);
+
+    //spike
+    ctx.moveTo(line * 3, height);
+    ctx.lineTo(line * 4, height);
+    ctx.lineTo(line * 4, height + line * 2);
+    ctx.lineTo(line * 3, height + line * 2);
+    ctx.lineTo(line * 3, height);
+
+    ctx.moveTo(line * 2, height + line * 2);
+    ctx.lineTo(line * 3, height + line * 2);
+    ctx.lineTo(line * 3, height + line * 3);
+    ctx.lineTo(line * 2, height + line * 3);
+    ctx.lineTo(line * 2, height);
+
+    ctx.moveTo(line, height + line * 3);
+    ctx.lineTo(line * 2, height + line * 3);
+    ctx.lineTo(line * 2, height + line * 4);
+    ctx.lineTo(line, height + line * 4);
+    ctx.lineTo(line, height);
+
+    ctx.moveTo(line * 8, height);
+    ctx.lineTo(line * 9, height);
+    ctx.lineTo(line * 9, height + line);
+    ctx.lineTo(line * 8, height + line);
+    ctx.lineTo(line * 8, height);
+
+    ctx.moveTo(line * 7, height + line);
+    ctx.lineTo(line * 8, height + line);
+    ctx.lineTo(line * 8, height + line * 2);
+    ctx.lineTo(line * 7, height + line * 2);
+    ctx.lineTo(line * 7, height + line);
+
+    ctx.moveTo(line * 5, height + line * 2);
+    ctx.lineTo(line * 7, height + line * 2);
+    ctx.lineTo(line * 7, height + line * 3);
+    ctx.lineTo(line * 5, height + line * 3);
+    ctx.lineTo(line * 5, height + line * 2);
+
+    ctx.moveTo(line * 3, height + line * 3);
+    ctx.lineTo(line * 5, height + line * 3);
+    ctx.lineTo(line * 5, height + line * 4);
+    ctx.lineTo(line * 3, height + line * 4);
+    ctx.lineTo(line * 3, height + line * 3);
+
+    ctx.moveTo(line, height + line * 4);
+    ctx.lineTo(line * 3, height + line * 4);
+    ctx.lineTo(line * 3, height + line * 5);
+    ctx.lineTo(line, height + line * 5);
+    ctx.lineTo(line, height + line * 4);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = colors.BUBBLE;
+    ctx.beginPath();
+    ctx.moveTo(line * 2, line);
+    ctx.lineTo(width - line * 2, line);
+    ctx.lineTo(width - line * 2, line * 2);
+    ctx.lineTo(width - line, line * 2);
+    ctx.lineTo(width - line, height - line * 2);
+    ctx.lineTo(width - line * 2, height - line * 2);
+    ctx.lineTo(width - line * 2, height - line);
+    ctx.lineTo(bR2, height - line);
+    ctx.lineTo(bR2, height);
+    ctx.lineTo(bR2 - line, height);
+    ctx.lineTo(bR2 - line, height + line);
+    ctx.lineTo(bR2 - line * 2, height + line);
+    ctx.lineTo(bR2 - line * 2, height + line * 2);
+    ctx.lineTo(bR2 - line * 4, height + line * 2);
+    ctx.lineTo(bR2 - line * 4, height + line * 3);
+    ctx.lineTo(bR2 - line * 6, height + line * 3);
+    ctx.lineTo(bR2 - line * 6, height + line * 2);
+    ctx.lineTo(bR1, height + line * 2);
+    ctx.lineTo(bR1, height - line);
+    ctx.lineTo(line * 2, height - line);
+    ctx.lineTo(line * 2, height - line * 2);
+    ctx.lineTo(line, height - line * 2);
+    ctx.lineTo(line, line * 2);
+    ctx.lineTo(line * 2, line * 2);
+    ctx.lineTo(line * 2, line);
+    ctx.lineTo(line * 3, line);
+
+    ctx.moveTo(line * 2, height + line * 3);
+    ctx.lineTo(line * 3, height + line * 3);
+    ctx.lineTo(line * 3, height + line * 4);
+    ctx.lineTo(line * 2, height + line * 4);
+    ctx.lineTo(line * 2, height + line * 3);
+
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = colors.BLACK;
+    for(i=0; i<text.length; i++) {
+        ctx.fillText(text[i], width/2, i*12 + 17);
+    }
+
+    canvases.speechBubbles.push({
+        sTick: sTick
+        , eTick: eTick
+        , canv: canv
+    });
+}
+
+var makeSpeechBubbles = function() {
+    addSpeechBubble(1848, 2254, ["I'M GIVING YOU", "A NIGHT CALL", "TO TELL YOU HOW I FEEL"], 150, 55);
+    addSpeechBubble(2475, 2893, ["I WANT TO DRIVE", "YOU THROUGH THE NIGHT", "DOWN THE HILLS"], 150, 55);
+    addSpeechBubble(3110, 3524, ["I'M GONNA TELL", "YOU SOMETHING YOU", "DON'T WANT TO HEAR"], 150, 55);
+    addSpeechBubble(3736, 4163, ["I'M GONNA SHOW", "YOU WHERE IT'S DARK", "BUT HAVE NO FEAR"], 150, 55);
+
+    addSpeechBubble(4499, 4673, ["THERE'S SOMETHING", "INSIDE YOU"], 150, 40);
+    addSpeechBubble(4811, 4960, ["IT'S HARD TO EXPLAIN"], 150, 25);
+    addSpeechBubble(5126, 5356, ["THEY'RE TALKING", "ABOUT YOU BOY"], 150, 40);
+    addSpeechBubble(5445, 5593, ["BUT YOU'RE STILL", "THE SAME"], 150, 40);
+
+    addSpeechBubble(5765, 5922, ["THERE'S SOMETHING", "INSIDE YOU"], 150, 40);
+    addSpeechBubble(6080, 6224, ["IT'S HARD TO EXPLAIN"], 150, 25);
+    addSpeechBubble(6394, 6617, ["THEY'RE TALKING", "ABOUT YOU BOY"], 150, 40);
+    addSpeechBubble(6711, 6856, ["BUT YOU'RE STILL", "THE SAME"], 150, 40);
+
+    addSpeechBubble(6908, 7324, ["I'M GIVING YOU", "A NIGHT CALL", "TO TELL YOU HOW I FEEL"], 150, 55);
+    addSpeechBubble(7542, 7960, ["I WANT TO DRIVE", "YOU THROUGH THE NIGHT", "DOWN THE HILLS"], 150, 55);
+    addSpeechBubble(8174, 8592, ["I'M GONNA TELL", "YOU SOMETHING YOU", "DON'T WANT TO HEAR"], 150, 55);
+    addSpeechBubble(8810, 9235, ["I'M GONNA SHOW", "YOU WHERE IT'S DARK", "BUT HAVE NO FEAR"], 150, 55);
+
+    addSpeechBubble(9561, 9742, ["THERE'S SOMETHING", "INSIDE YOU"], 150, 40);
+    addSpeechBubble(9877, 10040, ["IT'S HARD TO EXPLAIN"], 150, 25);
+    addSpeechBubble(10196, 10421, ["THEY'RE TALKING", "ABOUT YOU BOY"], 150, 40);
+    addSpeechBubble(10510, 10670, ["BUT YOU'RE STILL", "THE SAME"], 150, 40);
+
+    addSpeechBubble(10827, 10989, ["THERE'S SOMETHING", "INSIDE YOU"], 150, 40);
+    addSpeechBubble(11147, 11302, ["IT'S HARD TO EXPLAIN"], 150, 25);
+    addSpeechBubble(11466, 11684, ["THEY'RE TALKING", "ABOUT YOU BOY"], 150, 40);
+    addSpeechBubble(11790, 11928, ["BUT YOU'RE STILL", "THE SAME"], 150, 40);
+
+    addSpeechBubble(12098, 12252, ["THERE'S SOMETHING", "INSIDE YOU"], 150, 40);
+    addSpeechBubble(12410, 12560, ["IT'S HARD TO EXPLAIN"], 150, 25);
+    addSpeechBubble(12725, 12950, ["THEY'RE TALKING", "ABOUT YOU BOY"], 150, 40);
+    addSpeechBubble(13047, 13195, ["BUT YOU'RE STILL", "THE SAME"], 150, 40);
+}
+
 var addObjectAt = function(target, canvas, x, y) {
     try {
         var ctx = ctxs[target][parseInt(x/world.maxCanvasWidth)];
@@ -182,13 +398,11 @@ var makeGround = function() {
 
 var makeDeepBg1A = function() {
     if(!preRendered.KavinskyBillboard) return setTimeout(makeDeepBg1A,10);
-    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 1000, 250);
-    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 2000, 250);
-    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 3000, 250);
-    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 4000, 250);
-    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 5000, 250);
-    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 6000, 250);
-    addObjectAt("deepBg1A", canvases.kavinskyBillboard, 7000, 250);
+    var xPos = 1000;
+    while(xPos < 49950) {
+        addObjectAt("deepBg1A", canvases.kavinskyBillboard, xPos, 250);
+        xPos += 750;
+    }
     preRendered.DeepBg1A = true;
 }
 

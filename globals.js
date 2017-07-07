@@ -1,3 +1,5 @@
+var clickAtPoint = [];
+
 var world = {
     rendered: false
     , start: false
@@ -36,6 +38,3 @@ var gameCanvas = document.getElementById('canvas');
 var gameCtx= gameCanvas.getContext("2d");
 gameCanvas.width = world.viewPort.width;
 gameCanvas.height = world.viewPort.height;
-
-document.body.style.background = "black";
-gameCanvas.style.margin = "100px 200px";

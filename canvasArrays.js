@@ -27,6 +27,7 @@ var canvases = {
     , deepBg2A: []
     , deepBg3A: []
     , deepBg4A: []
+    , speechBubbles: []
 };
 
 var ctxs = {
@@ -58,6 +59,7 @@ var ctxs = {
     , deepBg2A: []
     , deepBg3A: []
     , deepBg4A: []
+    , speechBubbles: []
 }
 
 var preRendered = {
