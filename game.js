@@ -240,111 +240,111 @@ var checkStarted = function() {
 
 var buildOrder = [
     {
-        name: "Song"
+        name: "Loading Music"
         , fn: loadAudio
     }
     , {
-        name: "Troy"
+        name: "Loading Music"
         , fn: makeTroy
     }
     , {
-        name: "Sky Box"
+        name: "Loading Music"
         , fn: makeSkyBox
     }
     , {
-        name: "Ground"
+        name: "Remembering What To Make"
         , fn: makeGround
     }
     , {
-        name: "Floor"
+        name: "Remembering What To Make"
         , fn: makeFloor
     }
     , {
-        name: "Wooden Railing"
+        name: "Designing Shapes"
         , fn: makeWoodenRailing
     }
     , {
-        name: "Sky Box"
+        name: "Designing Shapes"
         , fn: makeSkyBox
     }
     , {
-        name: "Lamp Post"
+        name: "Making Shapes"
         , fn: makeLampPostA
     }
     , {
-        name: "Chunk A"
+        name: "Making Shapes"
         , fn: makechunkA
     }
     , {
-        name: "Chunk B"
+        name: "Making More Shapes"
         , fn: makechunkB
     }
     , {
-        name: "Background A"
+        name: "Making More Shapes"
         , fn: makeBgA
     }
     , {
-        name: "Background B"
+        name: "Too Many Shapes"
         , fn: makeBgB
     }
     , {
-        name: "Foreground A"
+        name: "Too Many Shapes"
         , fn: makeFgA
     }
     , {
-        name: "Foreground B"
+        name: "Deleting Shapes"
         , fn: makeFgB
     }
     , {
-        name: "Pigeon"
+        name: "Deleting Shapes"
         , fn: makePigeon
     }
     , {
-        name: "Ligthing On"
+        name: "Painting Shapes"
         , fn: makeLightingOn
     }
     , {
-        name: "Lighting Off"
+        name: "Painting Shapes"
         , fn: makeLightingOff
     }
     , {
-        name: "Lighting A"
+        name: "Applying Super Glue"
         , fn: makeLightingA
     }
     , {
-        name: "Lighting B"
+        name: "Applying Super Glue"
         , fn: makeLightingB
     }
     , {
-        name: "Billboard"
+        name: "Sticking Hand To Shape"
         , fn: makeBillboard
     }
     , {
-        name: "Kavinsky Billboard"
+        name: "Sticking Hand To Shape"
         , fn: makeKavinskyBillboard
     }
     , {
-        name: "Deep Background 1A"
+        name: "Swearing"
         , fn: makeDeepBg1A
     }
     , {
-        name: "Deep Background 2A"
+        name: "Swearing"
         , fn: makeDeepBg2A
     }
     , {
-        name: "Deep Background 3A"
+        name: "Rendering"
         , fn: makeDeepBg3A
     }
     , {
-        name: "Deep Background 4A"
+        name: "Rendering"
         , fn: makeDeepBg4A
     }
     , {
-        name: "Title Card"
+        name: "Tidying Up"
         , fn: makeTitleCard
     }
     , {
-        name: "Speech Bubbles"
+        name: "Tidying Up"
         , fn: makeSpeechBubbles
     }
 ]
