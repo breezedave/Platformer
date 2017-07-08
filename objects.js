@@ -397,11 +397,17 @@ var makeGround = function() {
 
 
 var makeDeepBg1A = function() {
-    if(!preRendered.KavinskyBillboard) return setTimeout(makeDeepBg1A,10);
+    if(!preRendered.KavinskyBillboard || !preRendered.CSSBillboard) return setTimeout(makeDeepBg1A,10);
     var xPos = 1000;
+    var i = 0;
     while(xPos < 49950) {
-        addObjectAt("deepBg1A", canvases.kavinskyBillboard, xPos, 250);
+        if(i%3 == 2) {
+            addObjectAt("deepBg1A", canvases.cssBillboard, xPos, 250);
+        } else {
+            addObjectAt("deepBg1A", canvases.kavinskyBillboard, xPos, 250);
+        }
         xPos += 750;
+        i++;
     }
     preRendered.DeepBg1A = true;
 }
@@ -735,6 +741,17 @@ var makeKavinskyBillboard = function() {
     kavinskyBillboard.src = "billboard1.png";
 }
 
+var makeCSSBillboard = function() {
+    var CSSBillboard = new Image();
+    CSSBillboard.addEventListener('load', function() {
+        var ctx = ctxs.cssBillboard;
+        ctx.drawImage(canvases.billboard, 0, 0);
+        ctx.drawImage(this, 49, 6);
+        canvasUsed.cssBillboard = true;
+        preRendered.CSSBillboard = true;
+    }, false);
+    CSSBillboard.src = "billboard2.png";
+}
 
 var makeTitleCard = function() {
     var titleCard = new Image();

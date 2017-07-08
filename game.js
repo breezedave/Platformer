@@ -324,6 +324,10 @@ var buildOrder = [
         , fn: makeKavinskyBillboard
     }
     , {
+        name: "Sticking Hand To Shape"
+        , fn: makeCSSBillboard
+    }
+    , {
         name: "Swearing"
         , fn: makeDeepBg1A
     }

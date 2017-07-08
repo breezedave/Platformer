@@ -13,6 +13,7 @@ var canvases = {
     , troy: document.createElement('canvas')
     , pigeon: document.createElement('canvas')
     , billboard: document.createElement('canvas')
+    , cssBillboard: document.createElement('canvas')
     , kavinskyBillboard: document.createElement('canvas')
     , titleCard: document.createElement('canvas')
     , skyBox: []
@@ -45,6 +46,7 @@ var ctxs = {
     , troy: canvases.troy.getContext("2d")
     , pigeon: canvases.pigeon.getContext("2d")
     , billboard: canvases.billboard.getContext("2d")
+    , cssBillboard: canvases.cssBillboard.getContext("2d")
     , kavinskyBillboard: canvases.kavinskyBillboard.getContext("2d")
     , titleCard: canvases.titleCard.getContext("2d")
     , skyBox: []
@@ -74,6 +76,7 @@ var preRendered = {
     , Pigeon: false
     , Billboard: false
     , KavinskyBillboard: false
+    , CSSBillboard: false
     , TitleCard: false
     , Audio: false
     , SkyBox: false
@@ -102,6 +105,7 @@ var canvasUsed = {
     , pigeon: false
     , billboard: false
     , kavinskyBillboard: false
+    , cssBillboard: false
     , titleCard: false
     , skyBox: []
     , bgA: []
